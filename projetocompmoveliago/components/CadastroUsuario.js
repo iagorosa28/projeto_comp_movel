@@ -1,37 +1,42 @@
 import * as React from 'react';
 import { TextInput, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import firebase from '../config/config';
 
 class CadastroUsuario extends React.Component{
   constructor(props){
     super(props);
-    this.state={
-      nomeUsuario: undefined,
-      cpfUsuario: undefined,
-      senhaUsuario: undefined
-    }
+    this.nomeUsuario = undefined,
+    this.cpfUsuario = undefined,
+    this.senhaUsuario = undefined
   }
 
-  async gravar(){
-    try{
-      await AsyncStorage.setItem(this.state.cpfUsuario, 
-      JSON.stringify({nome: this.state.nomeUsuario, senha: this.state.senhaUsuario}));
-      alert("Usuário Cadastrado!")
-    }catch(erro){
-      alert("Erro!")
-    }
+  salvar(){
+    firebase.database().ref("notebooks").orderByChild("cpfUsuario").equalTo(this.cpfUsuario).once('value', snapshot =>{
+      let data  = snapshot.val();
+      if(data == null){
+        firebase.database().ref('/notebooks').push({
+          nomeUsuario: this.nomeUsuario,
+          cpfUsuario: this.cpfUsuario,
+          senhaUsuario: this.senhaUsuario
+        })
+        alert("Usuário Cadastrado!")
+      }
+      else{
+        alert("CPF já cadastrado!")
+      }
+    })
   }
 
   render(){
     return(
       <View style={estilos.container}>
         <Text style={estilos.textoInput}>{"Nome:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({nomeUsuario: texto})}></TextInput>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.nomeUsuario = texto}}></TextInput>
         <Text style={estilos.textoInput}>{"CPF:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({cpfUsuario: texto})}></TextInput>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.cpfUsuario = texto}}></TextInput>
         <Text style={estilos.textoInput}>{"Senha:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({senhaUsuario: texto})}></TextInput>
-        <TouchableOpacity style={estilos.buttonInputCadastrar} onPress={()=>this.gravar()}>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaUsuario = texto}}></TextInput>
+        <TouchableOpacity style={estilos.buttonInputCadastrar} onPress={()=>this.salvar()}>
         <Text style={estilos.textoBotao}>{"Cadastrar"}</Text>
         </TouchableOpacity>
       </View>
