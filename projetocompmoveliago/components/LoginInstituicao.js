@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { TextInput, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import firebase from '../config/config';
 
 class LoginInstituicao extends React.Component{
   constructor(props){
     super(props)
+    this.cnpjInstituicao = undefined,
+    this.senhaInstituicao = undefined
     this.state = {
-      cnpjInstituicaoLogin: undefined,
-      senhaInstituicaoLogin: undefined
+      notebooks: []
     }
   }
 
@@ -15,32 +16,32 @@ class LoginInstituicao extends React.Component{
     return(
       <View style={estilos.container}>
         <Text style={estilos.textoInput}>{"CNPJ:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({cnpjInstituicaoLogin: texto})}></TextInput>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.cnpjInstituicao = texto}}></TextInput>
         <Text style={estilos.textoInput}>{"Senha:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({senhaInstituicaoLogin: texto})}></TextInput>
-        <TouchableOpacity style={estilos.buttonInputLogar} onPress={()=>this.ler()}>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaInstituicao = texto}}></TextInput>
+        <TouchableOpacity style={estilos.buttonInputLogar} onPress={()=>this.buscar()}>
         <Text style={estilos.textoBotao}>{"Logar"}</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-  async ler(){
-    try{
-      let instituicaoJSON = await AsyncStorage.getItem(this.state.cnpjInstituicaoLogin);
-      if(instituicaoJSON != null){
-        let instituicao = JSON.parse(instituicaoJSON);
-        if(instituicao.senha == this.state.senhaInstituicaoLogin){
-          alert("Logado!")
+  buscar(){
+    firebase.database().ref("notebooks").orderByChild("cnpjInstituicao").equalTo(this.cnpjInstituicao).once('value', snapshot =>{
+      let data  = snapshot.val();
+      if(data == null){
+        alert("Instituição não encontrada!")
+      }
+      else{
+        let dados = Object.values(data)
+        let instituicao = dados[0];
+        if(instituicao.senhaInstituicao == this.senhaInstituicao){
+          alert("Logado!");
         }else{
           alert("Senha Incorreta!");
         }
-      }else{
-        alert("Instituição não foi encontrada!");
       }
-    }catch(erro){
-      console.log(erro);
-    }
+    })
   }
 }
 

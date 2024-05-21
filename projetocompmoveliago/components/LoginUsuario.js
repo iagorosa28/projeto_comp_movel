@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { TextInput, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import firebase from '../config/config';
 
 class LoginUsuario extends React.Component{
   constructor(props){
     super(props)
+    this.cpfUsuario = undefined,
+    this.senhaUsuario = undefined
     this.state = {
-      cpfUsuarioLogin: undefined,
-      senhaUsuarioLogin: undefined
+      notebooks: []
     }
   }
 
@@ -15,32 +16,32 @@ class LoginUsuario extends React.Component{
     return(
       <View style={estilos.container}>
         <Text style={estilos.textoInput}>{"CPF:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({cpfUsuarioLogin: texto})}></TextInput>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.cpfUsuario = texto}}></TextInput>
         <Text style={estilos.textoInput}>{"Senha:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>this.setState({senhaUsuarioLogin: texto})}></TextInput>
-        <TouchableOpacity style={estilos.buttonInputLogar} onPress={()=>this.ler()}>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaUsuario = texto}}></TextInput>
+        <TouchableOpacity style={estilos.buttonInputLogar} onPress={()=>this.buscar()}>
         <Text style={estilos.textoBotao}>{"Logar"}</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-  async ler(){
-    try{
-      let usuarioJSON = await AsyncStorage.getItem(this.state.cpfUsuarioLogin);
-      if(usuarioJSON != null){
-        let usuario = JSON.parse(usuarioJSON);
-        if(usuario.senha == this.state.senhaUsuarioLogin){
-          alert("Logado!")
+  buscar(){
+    firebase.database().ref("notebooks").orderByChild("cpfUsuario").equalTo(this.cpfUsuario).once('value', snapshot =>{
+      let data  = snapshot.val();
+      if(data == null){
+        alert("Usuário não encontrado!")
+      }
+      else{
+        let dados = Object.values(data)
+        let usuario = dados[0];
+        if(usuario.senhaUsuario == this.senhaUsuario){
+          alert("Logado!");
         }else{
           alert("Senha Incorreta!");
         }
-      }else{
-        alert("Usuário não foi encontrado!");
       }
-    }catch(erro){
-      console.log(erro);
-    }
+    })
   }
 }
 
