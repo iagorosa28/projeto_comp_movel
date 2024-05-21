@@ -42,7 +42,11 @@ class LoginInstituicao extends React.Component{
         let dados = Object.values(data)
         let instituicao = dados[0];
         if(instituicao.senhaInstituicao == this.senhaInstituicao){
-          alert("Logado!");
+          if(instituicao.enderecoInstituicao != "NYD" && instituicao.cartaoInstituicao != "NYD"){
+            alert("OK");
+          }else{
+            this.props.navigation.navigate("Cadastro E/C Instituição", {cnpjInstituicao: this.cnpjInstituicao});
+          }
         }else{
           alert("Senha Incorreta!");
         }

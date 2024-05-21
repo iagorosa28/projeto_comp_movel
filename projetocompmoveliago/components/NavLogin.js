@@ -4,6 +4,7 @@ import Login from './Login';
 import LoginUsuario from './LoginUsuario';
 import CadastroECUsuario from './CadastroECUsuario'
 import LoginInstituicao from './LoginInstituicao';
+import CadastroECInstituicao from './CadastroECInstituicao';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ class NavLogin extends React.Component {
         <Stack.Screen name="Cadastro E/C Usuário" component={CadastroECUsuario} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
         <Stack.Screen name="Login Instituição" component={LoginInstituicao}
           options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
+        <Stack.Screen name="Cadastro E/C Instituição" component={CadastroECInstituicao} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
       </Stack.Navigator>
     );
   }
