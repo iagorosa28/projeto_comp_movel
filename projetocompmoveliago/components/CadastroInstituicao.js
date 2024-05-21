@@ -11,7 +11,9 @@ class CadastroInstituicao extends React.Component{
     super(props);
     this.nomeInstituicao = undefined,
     this.cnpjInstituicao = undefined,
-    this.senhaInstituicao = undefined
+    this.senhaInstituicao = undefined,
+    this.enderecoInstituicao = undefined,
+    this.cartaoInstituicao = undefined
   }
 
   salvar(){
@@ -21,7 +23,10 @@ class CadastroInstituicao extends React.Component{
         firebase.database().ref('/notebooks').push({
           nomeInstituicao: this.nomeInstituicao,
           cnpjInstituicao: this.cnpjInstituicao,
-          senhaInstituicao: this.senhaInstituicao
+          senhaInstituicao: this.senhaInstituicao,
+          // NYD = "Not yet defined" ou "Ainda não definido"
+          enderecoInstituicao: "NYD",
+          cartaoInstituicao: "NYD"
         })
         alert("Instituição Cadastrada!")
       }

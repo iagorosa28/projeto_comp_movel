@@ -42,7 +42,11 @@ class LoginUsuario extends React.Component{
         let dados = Object.values(data)
         let usuario = dados[0];
         if(usuario.senhaUsuario == this.senhaUsuario){
-          alert("Logado!");
+          if(usuario.enderecoUsuario != "NYD" && usuario.cartaoUsuario != "NYD"){
+            alert("OK");
+          }else{
+            this.props.navigation.navigate("Cadastro E/C Usuário", {cpfUsuario: this.cpfUsuario});
+          }
         }else{
           alert("Senha Incorreta!");
         }

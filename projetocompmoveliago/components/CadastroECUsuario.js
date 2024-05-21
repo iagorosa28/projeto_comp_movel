@@ -6,32 +6,27 @@ const Spacer = ({ size }) => {
   return <View style={{ height: size }} />;
 };
 
-class CadastroUsuario extends React.Component{
+class CadastroECUsuario extends React.Component{
   constructor(props){
     super(props);
-    this.nomeUsuario = undefined,
-    this.cpfUsuario = undefined,
-    this.senhaUsuario = undefined,
     this.enderecoUsuario = undefined,
-    this.cartaoUsuario = undefined
+    this.cartaoUsuario = undefined,
+    this.cpfUsuario = props.route.params.cpfUsuario // Recebe o cpfUsuario da navegação
   }
 
   salvar(){
     firebase.database().ref("notebooks").orderByChild("cpfUsuario").equalTo(this.cpfUsuario).once('value', snapshot =>{
       let data  = snapshot.val();
       if(data == null){
-        firebase.database().ref('/notebooks').push({
-          nomeUsuario: this.nomeUsuario,
-          cpfUsuario: this.cpfUsuario,
-          senhaUsuario: this.senhaUsuario,
-          // NYD = "Not yet defined" ou "Ainda não definido"
-          enderecoUsuario: "NYD",
-          cartaoUsuario: "NYD"
-        })
-        alert("Usuário Cadastrado!")
+        alert("Erro! usuário não encontrado.")
       }
       else{
-        alert("CPF já cadastrado!")
+        let key = Object.keys(data)[0];
+        firebase.database().ref(`/notebooks/${key}`).update({
+          enderecoUsuario: this.enderecoUsuario,
+          cartaoUsuario: this.cartaoUsuario
+        })
+        alert("Endereço e Cartão cadastrados com sucesso!");
       }
     })
   }
@@ -39,14 +34,11 @@ class CadastroUsuario extends React.Component{
   render(){
     return(
       <View style={estilos.container}>
-        <Text style={estilos.textoInput}>{"Nome:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>{this.nomeUsuario = texto}}></TextInput>
+        <Text style={estilos.textoInput}>{"Endereço Usuário:"}</Text>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.enderecoUsuario = texto}}></TextInput>
         <Spacer size={5} />
-        <Text style={estilos.textoInput}>{"CPF:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>{this.cpfUsuario = texto}}></TextInput>
-        <Spacer size={5} />
-        <Text style={estilos.textoInput}>{"Senha:"}</Text>
-        <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaUsuario = texto}}></TextInput>
+        <Text style={estilos.textoInput}>{"Cartão Usuário:"}</Text>
+        <TextInput style={estilos.input} onChangeText={(texto)=>{this.cartaoUsuario = texto}}></TextInput>
         <Spacer size={10} />
         <TouchableOpacity style={estilos.buttonInputCadastrar} onPress={()=>this.salvar()}>
         <Text style={estilos.textoBotao}>{"Cadastrar"}</Text>
@@ -93,4 +85,4 @@ const estilos = StyleSheet.create({
 
 })
 
-export default CadastroUsuario;
+export default CadastroECUsuario;
