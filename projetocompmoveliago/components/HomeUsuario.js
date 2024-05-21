@@ -22,7 +22,7 @@ class HomeUsuario extends React.Component{
   }
 
   goToPlanosUsuario(){
-    alert("Planos...");
+    this.props.navigation.navigate("Planos Usuário");
   }
 }
 
