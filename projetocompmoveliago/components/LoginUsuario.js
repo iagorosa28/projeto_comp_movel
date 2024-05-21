@@ -2,6 +2,10 @@ import * as React from 'react';
 import { TextInput, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from '../config/config';
 
+const Spacer = ({ size }) => {
+  return <View style={{ height: size }} />;
+};
+
 class LoginUsuario extends React.Component{
   constructor(props){
     super(props)
@@ -17,8 +21,10 @@ class LoginUsuario extends React.Component{
       <View style={estilos.container}>
         <Text style={estilos.textoInput}>{"CPF:"}</Text>
         <TextInput style={estilos.input} onChangeText={(texto)=>{this.cpfUsuario = texto}}></TextInput>
+        <Spacer size={5} />
         <Text style={estilos.textoInput}>{"Senha:"}</Text>
         <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaUsuario = texto}}></TextInput>
+        <Spacer size={10} />
         <TouchableOpacity style={estilos.buttonInputLogar} onPress={()=>this.buscar()}>
         <Text style={estilos.textoBotao}>{"Logar"}</Text>
         </TouchableOpacity>
@@ -51,11 +57,13 @@ const estilos = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ebf9eb"
+    backgroundColor: "#ebf9eb",
+    display: "flex",
+    height: "100%"
   },
 
   textoBotao: {
-    color: '#FFFFFF'
+    color: "#FFFFFF"
   },
 
   input: {
@@ -68,16 +76,14 @@ const estilos = StyleSheet.create({
   },
 
   textoInput: {
-    color: '#003300',
+    color: "#003300",
     fontSize: 20,
   },
 
   buttonInputLogar: {
-    backgroundColor: '#ff9900',
+    backgroundColor: "#ff9900",
     padding: 10,
-    borderRadius: 5,
-    position: "absolute",
-    top: 255
+    borderRadius: 5
   }
 
 })

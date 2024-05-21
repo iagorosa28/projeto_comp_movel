@@ -2,6 +2,10 @@ import * as React from 'react';
 import { TextInput, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from '../config/config';
 
+const Spacer = ({ size }) => {
+  return <View style={{ height: size }} />;
+};
+
 class CadastroInstituicao extends React.Component{
   constructor(props){
     super(props);
@@ -32,10 +36,13 @@ class CadastroInstituicao extends React.Component{
       <View style={estilos.container}>
         <Text style={estilos.textoInput}>{"Instituição:"}</Text>
         <TextInput style={estilos.input} onChangeText={(texto)=>{this.nomeInstituicao = texto}}></TextInput>
+        <Spacer size={5} />
         <Text style={estilos.textoInput}>{"CNPJ:"}</Text>
         <TextInput style={estilos.input} onChangeText={(texto)=>{this.cnpjInstituicao = texto}}></TextInput>
+        <Spacer size={5} />
         <Text style={estilos.textoInput}>{"Senha:"}</Text>
         <TextInput style={estilos.input} onChangeText={(texto)=>{this.senhaInstituicao = texto}}></TextInput>
+        <Spacer size={10} />
         <TouchableOpacity style={estilos.buttonInputCadastrar} onPress={()=>this.salvar()}>
         <Text style={estilos.textoBotao}>{"Cadastrar"}</Text>
         </TouchableOpacity>
@@ -50,11 +57,13 @@ const estilos = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ebf9eb"
+    backgroundColor: "#ebf9eb",
+    display: "flex",
+    height: "100%"
   },
 
   textoBotao: {
-    color: '#FFFFFF'
+    color: "#FFFFFF"
   },
 
   input: {
@@ -67,16 +76,14 @@ const estilos = StyleSheet.create({
   },
 
   textoInput: {
-    color: '#003300',
+    color: "#003300",
     fontSize: 20,
   },
 
   buttonInputCadastrar: {
-    backgroundColor: '#ff9900',
+    backgroundColor: "#ff9900",
     padding: 10,
-    borderRadius: 5,
-    position: "absolute",
-    top: 285
+    borderRadius: 5
   }
 
 })
