@@ -16,7 +16,7 @@ class NavLogin extends React.Component {
         <Stack.Screen name="Login" component={Login} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
         <Stack.Screen name="Login Usuário" component={LoginUsuario} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
         <Stack.Screen name="Cadastro E/C Usuário" component={CadastroECUsuario} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
-        <Stack.Screen name="Nav Home" component={NavHome} options={{headerShown: false}}/>
+        <Stack.Screen name="Home" component={NavHome} options={{headerShown: false}}/>
         <Stack.Screen name="Login Instituição" component={LoginInstituicao}
           options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>
         <Stack.Screen name="Cadastro E/C Instituição" component={CadastroECInstituicao} options={{headerStyle: {backgroundColor: '#7ece7e'}}}/>

@@ -27,7 +27,7 @@ class CadastroECUsuario extends React.Component{
           cartaoUsuario: this.cartaoUsuario
         })
         alert("Endereço e Cartão cadastrados com sucesso!");
-        this.props.navigation.navigate("Nav Home");
+        this.props.navigation.navigate("Home");
       }
     })
   }
