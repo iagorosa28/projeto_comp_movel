@@ -27,6 +27,11 @@ Login Usuário: loga o usuário com CPF e senha
 ![image](https://github.com/iagorosa28/ProjetoCompMovel/assets/125699322/389f5446-051b-43e1-bd98-7848b541b92a)
 
 
+Cadastrar Endereço e Cartão: caso seja a primeira vez do usuário no app, ele precisa cadastrar o endereço e o cartão de crédito. Se já tiver cadastrado, ele será direcionado diretamente para a home
+
+![image](https://github.com/iagorosa28/ProjetoCompMovel/assets/125699322/6a157daf-cb50-4682-b14d-5472be74ae16)
+
+
 Home Usuário: página inicial do usuário
 
 ![image](https://github.com/iagorosa28/ProjetoCompMovel/assets/125699322/b8753697-eeca-47a6-ad56-409c39892954)
