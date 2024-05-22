@@ -1,1 +1,4 @@
-# Projeto-Computa-o-M-vel
+# Projeto Comp. Móvel
+## Motivação
+## Objetivo
+## Funcionalidade
