@@ -24,7 +24,6 @@ class PlanosUsuario extends React.Component{
         firebase.database().ref(`/notebooks/${key}`).update({
           planoUsuario: this.planoUsuario
         })
-        alert("PLANO CONTRATADO COM SUCESSO!")
       }
     })
   }
@@ -57,6 +56,15 @@ class PlanosUsuario extends React.Component{
         <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToPlanoAnual()}>
         <Text style={estilos.textoBotao}>{"Contratar"}</Text>
         </TouchableOpacity>
+        <Spacer size={20} />
+        <Text style={estilos.textinho}>{
+          "Cancelar Plano Atual:"
+          // Desconto de 10%
+        }</Text>
+        <Spacer size={10} />
+        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToCancelarPlano()}>
+        <Text style={estilos.textoBotao}>{"Cancelar"}</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -64,14 +72,22 @@ class PlanosUsuario extends React.Component{
   goToPlanoMensal = () => {
     this.planoUsuario = "Mensal";
     this.salvar();
+    alert("Plano contratado/alterado para MENSAL com sucesso!")
   }
   goToPlanoSemestral = () => {
     this.planoUsuario = "Semestral";
     this.salvar();
+    alert("Plano contratado/alterado para SEMESTRAL com sucesso!")
   }
   goToPlanoAnual = () => {
     this.planoUsuario = "Anual";
     this.salvar();
+    alert("Plano contratado/alterado para ANUAL com sucesso!")
+  }
+  goToCancelarPlano = () => {
+    this.planoUsuario = "NYD";
+    this.salvar();
+    alert("PLANO CANCELADO!")
   }
 }
 
