@@ -11,7 +11,7 @@ class CadastroECUsuario extends React.Component{
     super(props);
     this.enderecoUsuario = undefined,
     this.cartaoUsuario = undefined,
-    this.cpfUsuario = props.route.params.cpfUsuario // Recebe o cpfUsuario da navegação
+    this.cpfUsuario = props.route.params.cpfUsuario
   }
 
   salvar(){
@@ -27,7 +27,7 @@ class CadastroECUsuario extends React.Component{
           cartaoUsuario: this.cartaoUsuario
         })
         alert("Endereço e Cartão cadastrados com sucesso!");
-        this.props.navigation.navigate("Home");
+        this.props.navigation.navigate("Nav Home Usuário", {cpfUsuario: this.cpfUsuario});
       }
     })
   }

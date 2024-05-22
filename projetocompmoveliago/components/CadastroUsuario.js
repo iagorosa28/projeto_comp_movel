@@ -13,7 +13,8 @@ class CadastroUsuario extends React.Component{
     this.cpfUsuario = undefined,
     this.senhaUsuario = undefined,
     this.enderecoUsuario = undefined,
-    this.cartaoUsuario = undefined
+    this.cartaoUsuario = undefined,
+    this.planoUsuario = undefined
   }
 
   salvar(){
@@ -26,7 +27,8 @@ class CadastroUsuario extends React.Component{
           senhaUsuario: this.senhaUsuario,
           // NYD = "Not yet defined" ou "Ainda não definido"
           enderecoUsuario: "NYD",
-          cartaoUsuario: "NYD"
+          cartaoUsuario: "NYD",
+          planoUsuario: "NYD"
         })
         alert("Usuário Cadastrado!")
       }

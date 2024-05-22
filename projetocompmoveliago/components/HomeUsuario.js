@@ -6,7 +6,7 @@ const Spacer = ({ size }) => {
 };
 
 class HomeUsuario extends React.Component{
-  render(){
+render(){
     return(
       <View style={estilos.container}>
         <Text style={estilos.titulo}>{"Marmitas Mara"}</Text>

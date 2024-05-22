@@ -1,47 +1,77 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import firebase from '../config/config';
 
 const Spacer = ({ size }) => {
   return <View style={{ height: size }} />;
 };
 
 class PlanosUsuario extends React.Component{
+  constructor(props){
+    super(props);
+    this.planoUsuario = undefined,
+    this.cpfUsuario = props.route.params.cpfUsuario
+  }
+
+  salvar(){
+    firebase.database().ref("notebooks").orderByChild("cpfUsuario").equalTo(this.cpfUsuario).once('value', snapshot =>{
+      let data  = snapshot.val();
+      if(data == null){
+        alert("Erro! usuário não encontrado.")
+      }
+      else{
+        let key = Object.keys(data)[0];
+        firebase.database().ref(`/notebooks/${key}`).update({
+          planoUsuario: this.planoUsuario
+        })
+        alert("PLANO CONTRATADO COM SUCESSO!")
+      }
+    })
+  }
+
   render(){
     return(
       <View style={estilos.container}>
         <Text style={estilos.textinho}>{
-          "Entrega Mensal - 20 marmitas - R$100,00/mês ou R$1.080,00/ano"
-          // Desconto de 10% para anual
+          "Plano Mensal - 4 marmitas/semana - Total 16 marmitas - R$100,00/mês"
         }</Text>
         <Spacer size={10} />
-        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToContratarUsuario()}>
+        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToPlanoMensal()}>
         <Text style={estilos.textoBotao}>{"Contratar"}</Text>
         </TouchableOpacity>
         <Spacer size={20} />
         <Text style={estilos.textinho}>{
-          "Entrega Mensal - 12 marmitas - R$80,00/mês ou R$892,00/ano"
-          // Desconto de 7% para anual
+          "Plano Semestral - 4 marmitas/semana - Total 96 marmitas - R$95,00/mês"
+          // Desconto de 5%
         }</Text>
         <Spacer size={10} />
-        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToContratarUsuario()}>
+        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToPlanoSemestral()}>
         <Text style={estilos.textoBotao}>{"Contratar"}</Text>
         </TouchableOpacity>
         <Spacer size={20} />
         <Text style={estilos.textinho}>{
-          "Entrega Mensal - 8 marmitas - R$60,00/mês ou R$684,00/ano"
-          // Desconto de 5% para anual
+          "Plano Anual - 4 marmitas/semana - Total 192 marmitas - R$90,00/mês"
+          // Desconto de 10%
         }</Text>
         <Spacer size={10} />
-        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToContratarUsuario()}>
+        <TouchableOpacity style={estilos.buttonUsuario} onPress={()=>this.goToPlanoAnual()}>
         <Text style={estilos.textoBotao}>{"Contratar"}</Text>
         </TouchableOpacity>
-        <Spacer size={20} />
       </View>
     )
   }
 
-  goToContratarUsuario(){
-    alert("PLANO CONTRATADO!");
+  goToPlanoMensal = () => {
+    this.planoUsuario = "Mensal";
+    this.salvar();
+  }
+  goToPlanoSemestral = () => {
+    this.planoUsuario = "Semestral";
+    this.salvar();
+  }
+  goToPlanoAnual = () => {
+    this.planoUsuario = "Anual";
+    this.salvar();
   }
 }
 
