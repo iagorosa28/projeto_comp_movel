@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import firebase from '../config/config';
+//import { Haptics } from 'expo-haptics';
+import { Vibration } from 'react-native';
 
 const Spacer = ({ size }) => {
   return <View style={{ height: size }} />;
@@ -13,7 +15,14 @@ class PlanosUsuario extends React.Component{
     this.cpfUsuario = props.route.params.cpfUsuario
   }
 
-  salvar(){
+  async salvar(){
+    /*const vibrarCelular = async () => {
+      try {
+        await Haptics.notificationAsync();
+      } catch (error) {
+        console.log('Erro ao fazer o celular vibrar:', error);
+      }
+    };*/
     firebase.database().ref("notebooks").orderByChild("cpfUsuario").equalTo(this.cpfUsuario).once('value', snapshot =>{
       let data  = snapshot.val();
       if(data == null){
@@ -23,7 +32,9 @@ class PlanosUsuario extends React.Component{
         let key = Object.keys(data)[0];
         firebase.database().ref(`/notebooks/${key}`).update({
           planoUsuario: this.planoUsuario
-        })
+        });
+        //vibrarCelular();
+        Vibration.vibrate(500);
       }
     })
   }
