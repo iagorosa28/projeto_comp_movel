@@ -1,3 +1,5 @@
+> A ideia ainda não está finalizada, mas a entrega está completa com tudo o que o professor pediu. 
+
 # Projeto Comp. Móvel
 
 ## Motivação
